@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8f9fa;
+  --foreground: #212529;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-anuphan), Arial, Helvetica, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  
+  --color-brand-dark: #343a40;
+  --color-brand-dark-hover: #212529;
+  --color-brand-gold: #ffc107;
+  --color-brand-gold-hover: #e0a800;
+  --color-brand-gold-light: #fffdf0;
+  --color-brand-gold-dark: #856404;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
