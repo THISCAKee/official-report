@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f9fa;
-  --foreground: #212529;
+  --background: #f9fafb;
+  --foreground: #1f2937;
 }
 
 @theme inline {
@@ -12,18 +12,42 @@
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   
   --color-brand-dark: #343a40;
-  --color-brand-dark-hover: #212529;
+  --color-brand-dark-hover: #1e2226;
   --color-brand-gold: #ffc107;
   --color-brand-gold-hover: #e0a800;
   --color-brand-gold-light: #fffdf0;
   --color-brand-gold-dark: #856404;
+  
+  --animate-fade-in-up: fade-in-up 0.4s ease-out forwards;
+  --animate-fade-in: fade-in 0.3s ease-out forwards;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -33,3 +57,371 @@ textarea {
   font: inherit;
 }
 
+/* Custom modern scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
+
+/* Glassmorphism panel styling */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark-glass-panel {
+  background: rgba(52, 58, 64, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Neon focus ring & custom shadows */
+.focus-ring-gold {
+  transition: all 0.2s ease-in-out;
+}
+.focus-ring-gold:focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.2);
+  outline: none;
+}
+
+.memo-document {
+  color: #111111;
+  font-family: var(--font-anuphan), Arial, Helvetica, sans-serif;
+}
+
+.memo-page {
+  box-sizing: border-box;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto 24px;
+  padding: 11mm 18mm 12mm;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.memo-page p {
+  margin: 0 0 4px;
+}
+
+.memo-header {
+  position: relative;
+  min-height: 20mm;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.memo-header h2 {
+  margin-top: 8mm;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.garuda-mark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 20mm;
+  width: 18mm;
+  object-fit: contain;
+}
+
+.memo-topline,
+.memo-row {
+  display: flex;
+  gap: 16mm;
+  align-items: baseline;
+}
+
+.memo-row {
+  justify-content: space-between;
+}
+
+.memo-divider {
+  margin: 1mm 0 6mm;
+  border-top: 1px solid #111111;
+}
+
+.memo-indent {
+  text-indent: 14mm;
+}
+
+.memo-line {
+  display: inline-block;
+  min-width: 34mm;
+  margin: 0 1.5mm;
+  padding: 0 1mm;
+  border-bottom: 1px dotted #111111;
+  line-height: 1.1;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.memo-line-short {
+  min-width: 28mm;
+}
+
+.memo-line-date {
+  min-width: 45mm;
+}
+
+.memo-line-name {
+  min-width: 58mm;
+}
+
+.memo-line-full {
+  min-width: 174mm;
+  text-align: left;
+}
+
+.memo-line-small {
+  min-width: 27mm;
+}
+
+.memo-line-long {
+  min-width: 152mm;
+  text-align: left;
+}
+
+.memo-line-place {
+  min-width: 76mm;
+  text-align: left;
+}
+
+.memo-line-province {
+  min-width: 42mm;
+}
+
+.memo-expenses {
+  margin: 2.5mm 0 0 16mm;
+  padding: 0;
+}
+
+.memo-expenses li {
+  margin-bottom: 2.1mm;
+  padding-left: 2mm;
+}
+
+.memo-line-expense {
+  min-width: 74mm;
+}
+
+.memo-line-money {
+  min-width: 30mm;
+  text-align: right;
+}
+
+.memo-line-car {
+  min-width: 50mm;
+}
+
+.memo-line-driver {
+  min-width: 46mm;
+}
+
+.memo-line-distance {
+  min-width: 34mm;
+  text-align: right;
+}
+
+.memo-line-other {
+  min-width: 42mm;
+  text-align: left;
+}
+
+.memo-total {
+  margin-top: 3mm !important;
+  text-align: right;
+}
+
+.memo-line-total {
+  min-width: 54mm;
+  text-align: right;
+}
+
+.memo-total-text {
+  text-align: right;
+}
+
+.memo-line-total-text {
+  min-width: 95mm;
+}
+
+.memo-check {
+  white-space: nowrap;
+}
+
+.memo-signature {
+  width: 82mm;
+  margin: 6mm 0 0 auto;
+  text-align: center;
+}
+
+.memo-line-sign {
+  min-width: 52mm;
+}
+
+.memo-line-sign-name {
+  min-width: 60mm;
+}
+
+.memo-comment-block {
+  margin-top: 16mm;
+}
+
+.memo-comment-first {
+  margin-top: 15mm;
+}
+
+.memo-line-comment {
+  min-width: 95mm;
+  text-align: left;
+}
+
+.memo-signature-lower {
+  margin-top: 9mm;
+}
+
+.memo-page-second {
+  padding-top: 20mm;
+}
+
+.memo-page-number {
+  margin-bottom: 12mm !important;
+  text-align: center;
+}
+
+.memo-second-section {
+  margin: 0 0 20mm 22mm;
+}
+
+.memo-second-section .memo-signature {
+  margin-top: 12mm;
+}
+
+.memo-line-budget {
+  min-width: 54mm;
+  text-align: left;
+}
+
+.memo-line-budget-wide {
+  min-width: 76mm;
+  text-align: left;
+}
+
+.memo-line-comment-wide {
+  min-width: 124mm;
+  text-align: left;
+}
+
+.memo-line-comment-mid {
+  min-width: 108mm;
+  text-align: left;
+}
+
+.memo-line-reason {
+  min-width: 116mm;
+  text-align: left;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-area {
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-area .grid,
+  .report-print-set,
+  .memo-document {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  main,
+  .relative,
+  .mx-auto {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .memo-page {
+    box-sizing: border-box;
+    width: 210mm;
+    max-width: 210mm;
+    height: 297mm;
+    max-height: 297mm;
+    overflow: hidden;
+    margin: 0;
+    padding: 11mm 18mm 12mm;
+    box-shadow: none;
+    break-inside: avoid;
+    break-after: page;
+    page-break-after: always;
+    break-before: auto;
+    page-break-before: auto;
+  }
+
+  .memo-page:last-child {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  .report-print-set + .report-print-set {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .print-single-report .report-print-set {
+    display: none !important;
+  }
+
+  .print-single-report .report-print-set.is-print-selected {
+    display: block !important;
+    break-before: auto !important;
+    page-break-before: auto !important;
+  }
+
+  .print-single-report .report-print-set.is-print-selected .memo-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .report-print-set:last-child .memo-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}
