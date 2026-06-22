@@ -17,6 +17,7 @@ enum Role {
   STAFF
   HEAD
   EXECUTIVE
+  PERSONNEL
 }
 
 enum ReportStatus {
@@ -26,6 +27,22 @@ enum ReportStatus {
   HEAD_REJECTED
   EXECUTIVE_APPROVED
   EXECUTIVE_REJECTED
+}
+
+enum TripPurpose {
+  MEETING
+  TRAINING_SEMINAR
+  STUDY_VISIT
+  OTHER
+}
+
+enum TransportMode {
+  AIRPLANE
+  TRAIN
+  BUS
+  PRIVATE_CAR
+  GOVERNMENT_CAR
+  OTHER
 }
 
 model User {
@@ -60,9 +77,32 @@ model TripReport {
   title           String
   objective       String       @db.Text
   location        String
+  province        String?
   startDate       DateTime
   endDate         DateTime
   budget          Decimal?     @db.Decimal(10, 2)
+  requestDate     DateTime     @default(now())
+  requesterPosition String?
+  companions      String?      @db.Text
+  purposeType     TripPurpose  @default(MEETING)
+  purposeOther    String?
+  transportMode   TransportMode?
+  vehicleRegistration String?
+  driverName      String?
+  distanceKm      Decimal?     @db.Decimal(10, 2)
+  allowanceDays   Int?
+  allowanceAmount Decimal?     @db.Decimal(10, 2)
+  accommodationDays Int?
+  accommodationAmount Decimal? @db.Decimal(10, 2)
+  transportAmount Decimal?     @db.Decimal(10, 2)
+  driverCompensationAmount Decimal? @db.Decimal(10, 2)
+  registrationFeeAmount Decimal? @db.Decimal(10, 2)
+  otherExpenseDetail String?   @db.Text
+  otherExpenseAmount Decimal?  @db.Decimal(10, 2)
+  totalBudgetText String?
+  budgetSource    String?
+  budgetCategory  String?
+  budgetProjectName String?
   result          String?      @db.Text
   problem         String?      @db.Text
   suggestion      String?      @db.Text

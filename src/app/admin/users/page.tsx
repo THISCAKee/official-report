@@ -6,13 +6,7 @@ import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 import { CreateUserForm } from "./create-user-form";
-
-const roleLabels = {
-  ADMIN: "ผู้ดูแลระบบ",
-  STAFF: "บุคลากร",
-  HEAD: "หัวหน้ากลุ่มงาน",
-  EXECUTIVE: "ผู้บริหาร",
-};
+import { UserList } from "./user-list";
 
 export default async function AdminUsersPage() {
   const user = await getCurrentUser();
@@ -38,70 +32,43 @@ export default async function AdminUsersPage() {
   });
 
   return (
-    <main className="min-h-screen bg-zinc-50 text-zinc-900">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 sm:py-8">
-        <header className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6 border-t-4 border-t-brand-gold">
-          <div>
-            <Link
-              className="inline-flex h-9 items-center rounded-md border border-zinc-300 bg-white px-3 text-sm font-semibold text-brand-dark transition hover:border-brand-dark hover:bg-zinc-50"
-              href="/dashboard"
-            >
-              กลับแดชบอร์ด
-            </Link>
-            <h1 className="mt-5 text-2xl font-bold tracking-tight text-brand-dark">จัดการผู้ใช้</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-500">
-              สร้างบัญชีและจัดการสิทธิ์การเข้าใช้งานระบบสำหรับบุคลากรภายในหน่วยงาน
-            </p>
+    <main className="min-h-screen bg-zinc-50/50 text-zinc-900 pb-12 selection:bg-brand-gold selection:text-brand-dark">
+      {/* Ambient top glow */}
+      <div className="absolute top-0 inset-x-0 h-64 bg-gradient-to-b from-brand-dark/[0.02] to-transparent pointer-events-none" />
+
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-8 sm:py-10 animate-fade-in-up">
+        
+        {/* Modern Header Banner */}
+        <header className="rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-md shadow-zinc-200/40 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-brand-gold" />
+          
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <Link
+                className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-zinc-250 bg-white px-3.5 text-xs font-bold text-zinc-700 shadow-sm transition hover:border-brand-dark hover:bg-zinc-50 active:scale-[0.98]"
+                href="/dashboard"
+              >
+                <svg className="w-3.5 h-3.5 stroke-current stroke-2 fill-none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 19l-7-7m0 0l7-7m-7 7h18" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                กลับไปแดชบอร์ด
+              </Link>
+              <h1 className="mt-4.5 text-2xl font-extrabold tracking-tight text-zinc-900 sm:text-3xl">
+                จัดการบัญชีผู้ใช้งาน
+              </h1>
+              <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-zinc-500 font-light">
+                สร้างผู้ใช้ใหม่ กำหนดสิทธิ์ตามบทบาทหน้าที่ (Staff, Head, Executive, Admin) และตรวจสอบการใช้งานของสมาชิก
+              </p>
+            </div>
           </div>
         </header>
 
+        {/* User Registration Form Card */}
         <CreateUserForm />
 
-        <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
-          <div className="flex flex-col gap-2 border-b border-zinc-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between bg-zinc-50/50">
-            <h2 className="text-base font-bold text-brand-dark">ผู้ใช้ทั้งหมด</h2>
-            <p className="text-sm font-semibold text-zinc-500 bg-zinc-200/60 px-2.5 py-0.5 rounded-full">
-              {users.length} บัญชี
-            </p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[720px] text-left text-sm">
-              <thead className="bg-zinc-50 text-zinc-600 border-b border-zinc-100">
-                <tr>
-                  <th className="px-5 py-3 font-semibold text-brand-dark">ชื่อ</th>
-                  <th className="px-5 py-3 font-semibold text-brand-dark">ชื่อผู้ใช้</th>
-                  <th className="px-5 py-3 font-semibold text-brand-dark">สิทธิ์</th>
-                  <th className="px-5 py-3 font-semibold text-brand-dark">สถานะ</th>
-                  <th className="px-5 py-3 font-semibold text-brand-dark">สร้างเมื่อ</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-100">
-                {users.map((item) => (
-                  <tr className="transition hover:bg-brand-gold/5" key={item.id}>
-                    <td className="px-5 py-3.5 font-medium text-zinc-900">{item.name}</td>
-                    <td className="px-5 py-3.5 text-zinc-600 font-mono">{item.username}</td>
-                    <td className="px-5 py-3.5">
-                      <span className="inline-flex rounded-md bg-zinc-100 px-2.5 py-1 text-xs font-bold text-zinc-700">
-                        {roleLabels[item.role]}
-                      </span>
-                    </td>
-                    <td className="px-5 py-3.5">
-                      <span className="inline-flex rounded-md bg-brand-gold/15 px-2.5 py-1 text-xs font-bold text-brand-gold-dark border border-brand-gold/25">
-                        {item.isActive ? "ใช้งาน" : "ปิดใช้งาน"}
-                      </span>
-                    </td>
-                    <td className="px-5 py-3.5 text-zinc-500">
-                      {new Intl.DateTimeFormat("th-TH", {
-                        dateStyle: "medium",
-                        timeStyle: "short",
-                      }).format(item.createdAt)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+        {/* Dynamic Interactive User Directory */}
+        <UserList currentUserId={user.id} initialUsers={users} />
+
       </div>
     </main>
   );
